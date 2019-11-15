@@ -114,7 +114,7 @@ public class LoginEndpointTest {
   @Test
   public void serverIsRunning() {
     System.out.println("Testing is server UP");
-    given().when().get("/info").then().statusCode(200);
+    given().when().get("/Example").then().statusCode(200);
   }
 
   @Test

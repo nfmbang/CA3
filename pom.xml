@@ -21,6 +21,16 @@
     
     <dependencies>
         <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2-servlet-initializer</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
@@ -100,6 +110,17 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-core</artifactId>
+            <version>2.0.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-maven-plugin</artifactId>
+            <version>2.0.10</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
@@ -125,7 +146,7 @@
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-grizzly2-http</artifactId>
             <version>2.29</version>
-<!--             <scope>test</scope>-->
+            <!--             <scope>test</scope>-->
         </dependency>
         
         <dependency>
@@ -140,6 +161,28 @@
     <build>
        
         <plugins>
+            
+            <plugin>
+               <groupId>io.swagger.core.v3</groupId>
+               <artifactId>swagger-maven-plugin</artifactId>
+               <version>2.0.10</version>
+               <configuration>
+                   <outputFileName>openapi</outputFileName>
+                   <outputPath>${project.basedir}/apidoc</outputPath>
+                   <configurationFilePath>${project.basedir}/src/main/resources/configurationFile.yaml</configurationFilePath>
+                   <outputFormat>JSONANDYAML</outputFormat>
+               </configuration>
+               <executions>
+                   <execution>
+                       <phase>compile</phase>
+                       <goals>
+                           <goal>resolve</goal>
+                       </goals>
+                   </execution>
+               </executions>
+           </plugin>
+            
+            
             <!-- Plugin used to deploy to remote server -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>

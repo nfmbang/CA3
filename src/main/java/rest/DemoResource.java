@@ -1,5 +1,5 @@
 package rest;
-
+/**
 import com.google.gson.Gson;
 import entities.User;
 import java.util.List;
@@ -15,9 +15,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 import utils.EMF_Creator;
 
+
 /**
  * @author lam@cphbusiness.dk
- */
+ 
 @Path("info")
 public class DemoResource {
 
@@ -68,3 +69,4 @@ public class DemoResource {
         return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
     }
 }
+*/

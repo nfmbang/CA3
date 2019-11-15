@@ -1,5 +1,5 @@
 package rest;
-
+/**
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import utils.EMF_Creator;
@@ -38,3 +38,4 @@ public class RenameMeResource {
 
  
 }
+*/

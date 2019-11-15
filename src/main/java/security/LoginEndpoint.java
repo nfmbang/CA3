@@ -1,5 +1,6 @@
 package security;
 
+import DTO.msg;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -24,6 +25,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import errorhandling.AuthenticationException;
 import errorhandling.GenericExceptionMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
 
@@ -37,6 +42,15 @@ public class LoginEndpoint {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @Operation(summary = ".",
+            tags = {"LOGIN"},
+            description = "Returns a Username and a token.",
+            responses = {
+                @ApiResponse(description = "Response",
+                            content = @Content(mediaType = "application/json")),
+                @ApiResponse(responseCode = "???", description = "wrong parameter names"),
+                @ApiResponse(responseCode = "200", description = "succes")
+            })
   public Response login(String jsonString) throws AuthenticationException {
     JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
     String username = json.get("username").getAsString();

@@ -42,15 +42,6 @@ public class LoginEndpoint {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @Operation(summary = ".",
-            tags = {"LOGIN"},
-            description = "Returns a Username and a token.",
-            responses = {
-                @ApiResponse(description = "Response",
-                            content = @Content(mediaType = "application/json")),
-                @ApiResponse(responseCode = "???", description = "wrong parameter names"),
-                @ApiResponse(responseCode = "200", description = "succes")
-            })
   public Response login(String jsonString) throws AuthenticationException {
     JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
     String username = json.get("username").getAsString();

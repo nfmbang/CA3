@@ -25,17 +25,15 @@ class LogIn extends Component {
         <BrowserRouter>
           <div>
             <Navigation />
-
             <Switch>
               <Route path="/" component={Home} exact />
               <Route path="/about" component={About} />
               <Route path="/contact" component={Contact} />
               <Route component={Error} />
-
             </Switch>
           </div>
         </BrowserRouter>
-      
+
         <h2>Login</h2>
         <form onSubmit={this.login} onChange={this.onChange} >
           <input placeholder="User Name" id="username" />
@@ -46,6 +44,19 @@ class LogIn extends Component {
     )
   }
 }
+
+export const LoginComp = () => {
+  return (
+    <div>
+      <form onSubmit={LogIn.login} onChange={LogIn.onChange} >
+        <input placeholder="User Name" id="username" />
+        <input placeholder="Password" id="password" />
+        <button>Login</button>
+      </form>
+    </div>
+  );
+}
+
 class LoggedIn extends Component {
   constructor(props) {
     super(props);

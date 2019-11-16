@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import {LoginComp} from '../App'
 
 
 const Navigation = () => {
@@ -15,9 +14,7 @@ const Navigation = () => {
             <li>
                 <NavLink to="/contact">Contact</NavLink>
             </li>
-            <li>
-            <LoginComp />
-            </li>
+
         </ul>
     );
 }

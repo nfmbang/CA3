@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import facade from "./apiFacade";
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom'
 import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
@@ -16,59 +16,81 @@ class LogIn extends Component {
     evt.preventDefault();
     this.props.login(this.state.username, this.state.password);
   }
+
   onChange = (evt) => {
     this.setState({ [evt.target.id]: evt.target.value })
   }
   render() {
     return (
+      
       <div>
-        <BrowserRouter>
-          <div>
-            <Navigation />
-            <Switch>
-              <Route path="/" component={Home} exact />
-              <Route path="/about" component={About} />
-              <Route path="/contact" component={Contact} />
-              <Route component={Error} />
-            </Switch>
-          </div>
+      <BrowserRouter>
+        <ul class="header">
+          <li>
+            <NavLink to="/" exact>Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/about">About</NavLink>
+          </li>
+          <li>
+            <NavLink to="/contact">Contact</NavLink>
+          </li>
+          <li>
+            <form onSubmit={this.login} onChange={this.onChange} >
+              <input placeholder="User Name" id="username" />
+              <input placeholder="Password" id="password" />
+              <button>Login</button>
+            </form>
+          </li>
+        </ul>
         </BrowserRouter>
-
-        <h2>Login</h2>
-        <form onSubmit={this.login} onChange={this.onChange} >
-          <input placeholder="User Name" id="username" />
-          <input placeholder="Password" id="password" />
-          <button>Login</button>
-        </form>
+        <Routes />
       </div>
     )
   }
 }
 
-export const LoginComp = () => {
+const Routes = () => {
   return (
-    <div>
-      <form onSubmit={LogIn.login} onChange={LogIn.onChange} >
-        <input placeholder="User Name" id="username" />
-        <input placeholder="Password" id="password" />
-        <button>Login</button>
-      </form>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/contact" component={Contact} />
+
+      </Switch>
+    </BrowserRouter>
   );
 }
 
 class LoggedIn extends Component {
   constructor(props) {
     super(props);
-    this.state = { dataFromServer: "Fetching!!" };
+    this.state = { dataFromServer: "welcome " + props.username };
   }
   componentDidMount() { }
   render() {
     return (
       <div>
-        <h2>Data Received from server</h2>
-        <h3>{this.state.dataFromServer}</h3>
+      <BrowserRouter>
+        <ul class="header">
+          <li>
+            <NavLink to="/" exact>Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/about">About</NavLink>
+          </li>
+          <li>
+            <NavLink to="/contact">Contact</NavLink>
+          </li>
+          <li>
+            <p>logged in as: {this.username}</p>
+          </li>
+        </ul>
+        </BrowserRouter>
+        <Routes />
       </div>
+      
     )
   }
 }

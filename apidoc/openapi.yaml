@@ -23,13 +23,55 @@ paths:
           description: default response
           content:
             application/xml: {}
-  /Example/user:
+  /info:
+    get:
+      operationId: getInfoForAll
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: string
+  /info/all:
+    get:
+      operationId: allUsers
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: string
+  /info/admin:
+    get:
+      operationId: getFromAdmin
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: string
+  /info/user:
+    get:
+      operationId: getFromUser
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: string
+  /Example/Authentication:
     get:
       tags:
-      - Authentication
-      summary: A method that checks if signed in as user.
+      - user
+      - login
+      - GET
+      summary: A method that checks if signed in as Admin.
       description: 'Returns a message if logged in as user '
-      operationId: getFromUser
+      operationId: getFromAdmin_1
       responses:
         default:
           description: Response
@@ -38,7 +80,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Message'
         403:
-          description: Not logged in as user
+          description: Not logged in as admin
         200:
           description: succes
   /Example/postExample:
@@ -69,6 +111,24 @@ paths:
           description: wrong parameter names
         200:
           description: succes
+  /Example/user:
+    get:
+      tags:
+      - Authentication
+      summary: A method that checks if signed in as user.
+      description: 'Returns a message if logged in as user '
+      operationId: getFromUser_1
+      responses:
+        default:
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        403:
+          description: Not logged in as user
+        200:
+          description: succes
   /Example/{id}:
     get:
       tags:
@@ -94,32 +154,8 @@ paths:
           description: Not a integer parameter
         200:
           description: succes
-  /Example/Authentication:
-    get:
-      tags:
-      - user
-      - login
-      - GET
-      summary: A method that checks if signed in as Admin.
-      description: 'Returns a message if logged in as user '
-      operationId: getFromAdmin
-      responses:
-        default:
-          description: Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Message'
-        403:
-          description: Not logged in as admin
-        200:
-          description: succes
   /login:
     post:
-      tags:
-      - LOGIN
-      summary: "."
-      description: Returns a Username and a token.
       operationId: login
       requestBody:
         content:
@@ -128,13 +164,9 @@ paths:
               type: string
       responses:
         default:
-          description: Response
+          description: default response
           content:
             application/json: {}
-        ???:
-          description: wrong parameter names
-        200:
-          description: succes
 components:
   schemas:
     Message:

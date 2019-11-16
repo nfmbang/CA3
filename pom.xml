@@ -168,7 +168,7 @@
                <version>2.0.10</version>
                <configuration>
                    <outputFileName>openapi</outputFileName>
-                   <outputPath>${project.basedir}/apidoc</outputPath>
+                   <outputPath>${project.build.directory}/CA3-1/documentation</outputPath>
                    <configurationFilePath>${project.basedir}/src/main/resources/configurationFile.yaml</configurationFilePath>
                    <outputFormat>JSONANDYAML</outputFormat>
                </configuration>

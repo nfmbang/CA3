@@ -28,6 +28,10 @@ import io.swagger.v3.oas.integration.api.OpenAPIConfigBuilder;
 import DTO.msg;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import utils.EMF_Creator;
 /**
  * REST Web Service
  *
@@ -41,7 +45,10 @@ public class ExampleResource {
 
     @Context
     SecurityContext securityContext;
-
+    
+    
+    private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
+    
     /**
      * Creates a new instance of ExampleResource
      */
@@ -75,10 +82,10 @@ public class ExampleResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("Authentication")
+    @Path("admin")
     @RolesAllowed("admin")
     @Operation(summary = "A method that checks if signed in as Admin.",
-            tags = {"user", "login","GET"},
+            tags = {"Authentication"},
             description = "Returns a message if logged in as user ",
             responses = {
                 @ApiResponse(description = "Response",
@@ -89,7 +96,7 @@ public class ExampleResource {
             })
     public String getFromAdmin() {
         String thisuser = securityContext.getUserPrincipal().getName();
-        return GSON.toJson(new msg("hej Admin!"));
+        return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
     }
 
     /**
@@ -119,7 +126,7 @@ public class ExampleResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON}) 
     @Operation(summary = "A method that is a simple get example with a parameter.",
-            tags = {"POST"},
+            tags = {"GET"},
             description = "Returns a message if logged in as user ",
             responses = {
                 @ApiResponse(description = "Response",
@@ -132,4 +139,26 @@ public class ExampleResource {
         return "{\"msg\": \"Hello, you just requested(GET)" + id + "\"}";
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getInfoForAll() {
+        return "{\"msg\":\"Hello anonymous\"}";
+    }
+
+    //Just to verify if the database is setup
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("all")
+    public String allUsers() {
+
+        EntityManager em = EMF.createEntityManager();
+        try {
+            List<User> users = em.createQuery("select user from User user").getResultList();
+            return "[" + users.size() + "]";
+        } finally {
+            em.close();
+        }
+    }
+    
+    
 }

@@ -18,7 +18,7 @@ import utils.EMF_Creator;
 
 /**
  * @author lam@cphbusiness.dk
- 
+
 @Path("info")
 public class DemoResource {
 
@@ -69,4 +69,4 @@ public class DemoResource {
         return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
     }
 }
-*/
+ **/

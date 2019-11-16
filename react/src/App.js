@@ -5,7 +5,6 @@ import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
-import Navigation from './components/Navigation';
 import ListItem from './components/ListItem';
 
 class LogIn extends Component {
@@ -23,75 +22,76 @@ class LogIn extends Component {
   }
   render() {
     return (
-      
+
       <div>
-      <BrowserRouter>
-        <ul class="header">
-          <li>
-            <NavLink to="/" exact>Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/about">About</NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact">Contact</NavLink>
-          </li>
-          <li>
-            <form onSubmit={this.login} onChange={this.onChange} >
-              <input placeholder="User Name" id="username" />
-              <input placeholder="Password" id="password" />
-              <button>Login</button>
-            </form>
-          </li>
-        </ul>
+        <BrowserRouter>
+          <ul class="header">
+            <li>
+              <NavLink to="/" exact>Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/about">About</NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact">Contact</NavLink>
+            </li>
+            <li>
+              <form onSubmit={this.login} onChange={this.onChange} >
+                <input placeholder="User Name" id="username" />
+                <input placeholder="Password" id="password" />
+                <button>Login</button>
+              </form>
+            </li>
+          </ul>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+            <Route component={Error} />
+
+
+          </Switch>
         </BrowserRouter>
-        <Routes />
+
       </div>
     )
   }
 }
 
-const Routes = () => {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/contact" component={Contact} />
-
-      </Switch>
-    </BrowserRouter>
-  );
-}
-
 class LoggedIn extends Component {
   constructor(props) {
     super(props);
-    this.state = { dataFromServer: "welcome " + props.username };
+    this.state = { username: "" };
   }
   componentDidMount() { }
   render() {
     return (
       <div>
-      <BrowserRouter>
-        <ul class="header">
-          <li>
-            <NavLink to="/" exact>Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/about">About</NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact">Contact</NavLink>
-          </li>
-          <li>
-            <p>logged in as: {this.username}</p>
-          </li>
-        </ul>
+        <BrowserRouter>
+          <ul class="header">
+            <li>
+              <NavLink to="/" exact>Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/about">About</NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact">Contact</NavLink>
+            </li>
+            <li>
+              <p class="header">logged in as: {this.props.username}</p>
+            </li>
+          </ul>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+            <Route component={Error} />
+
+          </Switch>
         </BrowserRouter>
-        <Routes />
       </div>
-      
+
     )
   }
 }
@@ -106,7 +106,7 @@ class App extends Component {
   }
   login = (user, pass) => {
     facade.login(user, pass)
-      .then(res => this.setState({ loggedIn: true }));
+      .then(res => this.setState({ loggedIn: true, username: user }));
   }
   render() {
     return (
@@ -114,14 +114,14 @@ class App extends Component {
       <div>
         {!this.state.loggedIn ? (<LogIn login={this.login} />) :
           (<div>
-            <LoggedIn />
+            <LoggedIn username={this.state.username} />
             <button onClick={this.logout}>Logout</button>
           </div>)}
 
-      
-      <div>
-      <ListItem />
-      </div>
+
+        <div>
+          <ListItem />
+        </div>
       </div>
     )
   }

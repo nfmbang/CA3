@@ -31,3 +31,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+p.header {
+  display: block;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+ }

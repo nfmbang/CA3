@@ -6,6 +6,7 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
 import Navigation from './components/Navigation';
+import ListItem from './components/ListItem';
 
 class LogIn extends Component {
   constructor(props) {
@@ -116,6 +117,11 @@ class App extends Component {
             <LoggedIn />
             <button onClick={this.logout}>Logout</button>
           </div>)}
+
+      
+      <div>
+      <ListItem />
+      </div>
       </div>
     )
   }

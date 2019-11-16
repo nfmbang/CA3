@@ -1,68 +1,101 @@
 import React, { Component } from "react"
 import facade from "./apiFacade";
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Home from './components/Home';
+import About from './components/About';
+import Contact from './components/Contact';
+import Error from './components/Error';
+import Navigation from './components/Navigation';
+
 class LogIn extends Component {
- constructor(props) {
-   super(props);
-   this.state = { username: "", password: "" }
- }
- login = (evt) => {
-   evt.preventDefault();
-   this.props.login(this.state.username, this.state.password);
- }
- onChange = (evt) => {
-   this.setState({[evt.target.id]: evt.target.value})
- }
- render() {
-   return (
-     <div>
-       <h2>Login</h2>
-       <form onSubmit={this.login} onChange={this.onChange} >
-         <input placeholder="User Name" id="username" />
-         <input placeholder="Password" id="password" />
-         <button>Login</button>
-       </form>
-     </div>
-   )
- }
+  constructor(props) {
+    super(props);
+    this.state = { username: "", password: "" }
+  }
+  login = (evt) => {
+    evt.preventDefault();
+    this.props.login(this.state.username, this.state.password);
+  }
+  onChange = (evt) => {
+    this.setState({ [evt.target.id]: evt.target.value })
+  }
+  render() {
+    return (
+      <div>
+        <BrowserRouter>
+          <div>
+            <Navigation />
+            <Switch>
+              <Route path="/" component={Home} exact />
+              <Route path="/about" component={About} />
+              <Route path="/contact" component={Contact} />
+              <Route component={Error} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+
+        <h2>Login</h2>
+        <form onSubmit={this.login} onChange={this.onChange} >
+          <input placeholder="User Name" id="username" />
+          <input placeholder="Password" id="password" />
+          <button>Login</button>
+        </form>
+      </div>
+    )
+  }
 }
+
+export const LoginComp = () => {
+  return (
+    <div>
+      <form onSubmit={LogIn.login} onChange={LogIn.onChange} >
+        <input placeholder="User Name" id="username" />
+        <input placeholder="Password" id="password" />
+        <button>Login</button>
+      </form>
+    </div>
+  );
+}
+
 class LoggedIn extends Component {
- constructor(props) {
-   super(props);
-   this.state= {dataFromServer: "Fetching!!"};
- }
- componentDidMount(){}
- render() {
-   return (
-     <div>
-       <h2>Data Received from server</h2>
-       <h3>{this.state.dataFromServer}</h3>
-     </div>
-   )
- }
+  constructor(props) {
+    super(props);
+    this.state = { dataFromServer: "Fetching!!" };
+  }
+  componentDidMount() { }
+  render() {
+    return (
+      <div>
+        <h2>Data Received from server</h2>
+        <h3>{this.state.dataFromServer}</h3>
+      </div>
+    )
+  }
 }
 class App extends Component {
- constructor(props) {
-   super(props);
-   this.state = { loggedIn: false }
- }
- logout = () => {
-  facade.logout();
-  this.setState({ loggedIn: false });
- } //TODO
- login = (user, pass) => {
-  facade.login(user,pass)
-  .then(res =>this.setState({ loggedIn: true }));
- } //TODO
- render() {
-   return (
-     <div>
-       {!this.state.loggedIn ? (<LogIn login={this.login} />) :
-         ( <div>
-             <LoggedIn/>
-             <button onClick={this.logout}>Logout</button>
-           </div>)}
-     </div>
-   )
- }
+  constructor(props) {
+    super(props);
+    this.state = { loggedIn: false }
+  }
+  logout = () => {
+    facade.logout();
+    this.setState({ loggedIn: false });
+  }
+  login = (user, pass) => {
+    facade.login(user, pass)
+      .then(res => this.setState({ loggedIn: true }));
+  }
+  render() {
+    return (
+
+      <div>
+        {!this.state.loggedIn ? (<LogIn login={this.login} />) :
+          (<div>
+            <LoggedIn />
+            <button onClick={this.logout}>Logout</button>
+          </div>)}
+      </div>
+    )
+  }
 }
 export default App;

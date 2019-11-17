@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 const URL = "http://localhost:8080/ca3";
 function handleHttpErrors(res) {
     if (!res.ok) {
@@ -25,19 +26,21 @@ class ApiFacade {
         return opts;
     }
 
-    login = (user, pass) => {
+    login = async (user, pass) => {
         const options = this.makeOptions("POST", true, { username: user, password: pass });
-        return fetch(URL + "/api/login", options)
-            .then(handleHttpErrors)
-            .then(res => this.getResponse(res))
+       // return fetch(URL + "/api/login", options)
+       //     .then(handleHttpErrors) 
+       //     .then(res => this.setToken(res.token))
+       //     .then(res => res)
+       const res = await fetch(URL + "/api/login", options)
+       const json = await res.json();
+       if(!res.ok){
+           throw {status: res.status, fullError: json}
+       }
+       this.setToken(res.token)
+       return json;
     }
-
-    getResponse(res) {
-        this.setToken(res.token)
-        console.log(res)
-        return res;
-    }
-
+    
     CheckIfUser(list){
         return fetch(URL+"/api/Example/user")
                 .then(function(response) {

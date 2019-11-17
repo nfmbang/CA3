@@ -71,8 +71,9 @@ class LoggedIn extends Component {
     super(props);
     this.state = { username: "" };
   }
-  componentDidMount() { }
-  render() {
+  componentDidMount() {
+  }
+  render () {
     return (
       <div>
         <BrowserRouter >
@@ -87,7 +88,7 @@ class LoggedIn extends Component {
               <NavLink to="/contact">Contact</NavLink>
             </li>
             <li>
-              <p class="header">logged in as: {this.props.username}</p>
+              <p class="header">logged in as: {this.props.username}, role: {this.props.role}</p>
             </li>
           </ul>
           <Switch>
@@ -112,23 +113,25 @@ class App extends Component {
     facade.logout();
     this.setState({ loggedIn: false });
   }
-  login = (user, pass) => {
-    facade.login(user, pass)
-      .then(res => this.setState({ loggedIn: true, username: user, role: res.user }));
-      console.log(this.state.role)
+
+
+  login = async (username, pass) => {
+   const res = await facade.login(username, pass);
+      this.setState({ loggedIn: true, username: username, role: res.role });
   }
+  
   render() {
     return (
 
       <div>
         {!this.state.loggedIn ? (<LogIn login={this.login} />) :
           (<div>
-            <LoggedIn username={this.state.username} />
+            <LoggedIn username={this.state.username} role={this.state.role} />
             <button onClick={this.logout}>Logout</button>
           </div>)}
 
 
-        
+
       </div>
     )
   }

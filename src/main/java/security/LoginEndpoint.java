@@ -50,10 +50,11 @@ public class LoginEndpoint {
     try {
       User user = USER_FACADE.getVeryfiedUser(username, password);
       String token = createToken(username, user.getRolesAsStrings());
+      String role = user.getRolesAsStrings().get(0);
       JsonObject responseJson = new JsonObject();
       responseJson.addProperty("username", username);
       responseJson.addProperty("token", token);
-      responseJson.addProperty("role", user.getRolesAsStrings().get(0));
+      responseJson.addProperty("role", role);
       return Response.ok(new Gson().toJson(responseJson)).build();
 
     } catch (JOSEException | AuthenticationException ex) {

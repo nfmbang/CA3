@@ -1,17 +1,11 @@
-[![Build Status](https://travis-ci.org/dat3startcode/rest-jpa-devops-startcode.svg?branch=master)](https://travis-ci.org/dat3startcode/rest-jpa-devops-startcode)
+# Velcommen til CA3 af en gruppe?
+## Mål med opgaven:
+Lave en template der kan bruges til hurtigt at starte et project op, dvs. at det inkludere en react frontend (med router), en backend med REST-api, opsat swagger til at documentere API'en, sikkerhed gennem toke, Login og Logud funktion.   
 
-*This project is meant as start code for projects and exercises given in Flow-1+2 at http://cphbusiness.dk in the Study Program "AP degree in Computer Science"*
+## Deployment.
+Vi bruger Travis til at deploye vores endelige version af projektet til en droplet. 
+Denne er standard til [nfmbang.dk](https://nfmbang.dk/ca3). Men kan også findes på [matheradical.dk ](https://matheradical.dk/ca3 ) og [jmhdat3.com](https://jmhdat3.com/ca3).
 
-*Projects which are expected to use this start-code are projects that require all, or most of the following technologies:*
- - *JPA and REST*
-- *Testing, including database test*
-- *Testing, including tests of REST-API's*
-- *CI and CONTINUOUS DELIVERY*
+## Sikkerhed:
+Vi bruger en kombination af hashing og salt til at beskytte vores passwords i databasen, til dette har vi anvendt bcrypt. Ellers anvender vi HTTPS gennem nginx.   
 
-### Preconditions
-*In order to use this code, you should have a local developer setup + a "matching" droplet on Digital Ocean as described in the 3. semester guidelines* 
-# Getting Started
-
-This project contains two major documentation files: 
- - [First time users - getting started](README_proof_of_concept.md)
- - [How to use for future projects](README_how_to_use.md)

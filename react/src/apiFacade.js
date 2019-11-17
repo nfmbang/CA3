@@ -1,5 +1,5 @@
 /* eslint-disable no-throw-literal */
-const URL = "http://localhost:8080/ca3";
+const URL = "http://matheradical.dk/CA3";
 function handleHttpErrors(res) {
     if (!res.ok) {
         return Promise.reject({ status: res.status, fullError: res.json() })

@@ -106,7 +106,7 @@ class LoggedIn extends Component {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { loggedIn: false }
+    this.state = { loggedIn: false, username: "", role: "" }
   }
   logout = () => {
     facade.logout();
@@ -114,7 +114,8 @@ class App extends Component {
   }
   login = (user, pass) => {
     facade.login(user, pass)
-      .then(res => this.setState({ loggedIn: true, username: user }));
+      .then(res => this.setState({ loggedIn: true, username: user, role: res.user }));
+      console.log(this.state.role)
   }
   render() {
     return (

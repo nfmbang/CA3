@@ -29,7 +29,13 @@ class ApiFacade {
         const options = this.makeOptions("POST", true, { username: user, password: pass });
         return fetch(URL + "/api/login", options)
             .then(handleHttpErrors)
-            .then(res => { this.setToken(res.token) })
+            .then(res => this.getResponse(res))
+    }
+
+    getResponse(res) {
+        this.setToken(res.token)
+        console.log(res)
+        return res;
     }
 
     CheckIfUser(list){

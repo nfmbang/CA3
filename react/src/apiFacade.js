@@ -32,6 +32,26 @@ class ApiFacade {
             .then(res => { this.setToken(res.token) })
     }
 
+    CheckIfUser(list){
+        return fetch(URL+"/api/Example/user")
+                .then(function(response) {
+                        return response.json();
+                }).then(res=>{list.unshift(res)})
+    }
+    CheckIfAdmin(list){
+        return fetch(URL+"/api/Example/admin")
+                .then(function(response) {
+                        return response.json();
+                }).then(res=>{list.unshift(res)})
+    }
+
+    TryGet (nr,list){
+        return fetch(URL+"/api/Example/"+nr)
+                .then(function(response) {
+                        return response.json();
+                }).then(res=>{list.unshift({key: list.length+1 ,code : 200, message :res.msg})})
+
+    }
 
     setToken = (token) => {
         localStorage.setItem('jwtToken', token)

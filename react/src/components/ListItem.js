@@ -1,31 +1,50 @@
 import React from 'react';
-
+import facade from "../apiFacade";
 
 class listItem extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			msgs : ["hej","hello","smth"]
+			msgs : [{key : 1 ,code : 200 , message : "Succesfuld connect"}]
 		}
 	}
-	addItem(e){
+
+
+
+	somefunction(e){
 		e.preventDefault();
 		const {msgs} = this.state;
+		var list = this.state.msgs;
 		const newItem = this.newItem.value;
-		this.setState({
-			msgs: [newItem,...this.state.msgs]
-		})
+		facade.TryGet(newItem,list)
+				.then(res => this.setState({ msgs: list}));
+
+	}
+
+	CheckIfUser(e){
+		e.preventDefault();
+		const {msgs} = this.state;
+		var list = this.state.msgs;
+		facade.CheckIfUser(list)
+				.then(res => this.setState({ msgs: list}));
+	}
+	CheckIfAdmin(e){
+		e.preventDefault();
+		const {msgs} = this.state;
+		var list = this.state.msgs;
+		facade.CheckIfAdmin(list)
+				.then(res => this.setState({ msgs: list}));
 	}
 	render(){
 		const {msgs} = this.state;
 		return(
 		<div>
-		<form onSubmit ={(e) => {this.addItem(e)}} >
+		<form onSubmit ={(e) => {this.somefunction(e)}} >
 			<label> print a msg</label>
 			<input ref={input => this.newItem = input} placeholder="msg" id="msg" />
 			<button type="submit"> add </button>
 		</form>
-
+		<button onClick={(e) => {this.CheckIfAdmin(e)}}> er du admin? </button> <button onClick={(e) => {this.CheckIfUser(e)}}> er du User? </button>
 		<table className ="table">
 			<thead>
 				<tr>
@@ -38,9 +57,9 @@ class listItem extends React.Component{
   			{
   				msgs.map(item =>{
   					return(
-  						<tr key={item}>
-  							<th scope ="row">1</th> 
-  							<td>{item}</td>
+  						<tr  key={item.key}>
+  							<td>{item.code}</td>
+  							<td>{item.message}</td>
   						</tr> 
   					)
   				})

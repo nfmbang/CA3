@@ -1,10 +1,10 @@
 import React from 'react';
+import ListItem from './ListItem';
 
 const About = () => {
     return (
         <div>
-        <p>
-        About</p>
+        <ListItem />
         </div>
     );
 }

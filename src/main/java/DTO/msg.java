@@ -14,21 +14,34 @@ import javax.xml.bind.annotation.XmlElement;
  */
 @Schema(name="Message", description="Message from server.")
 public class msg {
-    private String msg;
+    private int code;
+    private String message;
 
-    public msg(String msg) {
-        this.msg = msg;
+    public msg(int code, String msg) {
+        this.message = msg;
+        this.code = code;
     }
 
     
     
     @Schema(description = "Message from the server")
-    public String getMsg() {
-        return msg;
+    public String getmessage() {
+        return message;
     }
 
     public void setMsg(String msg) {
-        this.msg = msg;
+        this.message = msg;
     }
+
+    @Schema(description = "code from the server, will usualy be 200")
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+    
+    
     
 }

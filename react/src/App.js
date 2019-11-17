@@ -119,9 +119,7 @@ class App extends Component {
           </div>)}
 
 
-        <div>
-          <ListItem />
-        </div>
+        
       </div>
     )
   }

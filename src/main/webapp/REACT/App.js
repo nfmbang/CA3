@@ -40,7 +40,7 @@ class LogIn extends Component {
               <NavLink to="/ListItem">API test</NavLink>
             </li>
             <li>
-              <a href="/ca3/documentation/"> Documentation </a>
+              <NavLink to="/redirect">API documentation</NavLink>
             </li>
             <li>
               <form onSubmit={this.login} onChange={this.onChange} >
@@ -55,6 +55,7 @@ class LogIn extends Component {
             <Route path="/about" component={About} />
             <Route path="/contact" component={Contact} />
             <Route path="/ListItem" component={ListItem} />
+            <Route path="/redirect" component={redirect} />
             <Route component={Error} />
 
 
@@ -75,7 +76,7 @@ class LoggedIn extends Component {
   render() {
     return (
       <div>
-        <BrowserRouter >
+        <BrowserRouter>
           <ul class="header">
             <li>
               <NavLink to="/" exact>Home</NavLink>

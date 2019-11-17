@@ -18,7 +18,7 @@ const Navigation = () => {
                 <NavLink to="/ListItem">API test</NavLink>
             </li>
             <li>
-                <a href="ca3/documentation/"> Documentation </a>
+                <NavLink to="/redirect">API documentation</NavLink>
             </li>
 
         </ul>

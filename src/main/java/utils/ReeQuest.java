@@ -13,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -30,36 +32,45 @@ public class ReeQuest {
 
     final public String source;
     private String url;
-    private HashMap<String, String> paths = new HashMap<String, String>();
-    private StringBuilder response = new StringBuilder();
+    private HashMap<String, String> paths = new HashMap<>();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public ReeQuest(String source, String URL) throws MalformedURLException {
         this.source = source;
-        this.url =URL;
-        URL obj = new URL(url);
+        this.url = URL;
     }
 
     public void addPath(String path) {
         paths.put(path, path);
     }
 
-    public String getRequest(String path, Map<String, String> parameters) throws ReeQuestException {
+    public String getRequest(String path, Map<String, String> parameters, String body, Map<String, String> header, String method) throws ReeQuestException {
         StringBuilder response = new StringBuilder();
         BufferedReader in;
         String inputLine;
         try {
-            URL obj = new URL(url + "/" + path);
+            URL obj = new URL(url + "/" + path + "?" + getParamsString(parameters));
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod(method);
             con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestMethod("GET");
+
+            if (header != null && !header.isEmpty()) {
+                for (Map.Entry<String, String> entry : header.entrySet()) {
+                    con.setRequestProperty(entry.getKey(), entry.getValue());
+                }
+            }
 
             con.setDoOutput(true);
-            DataOutputStream out = new DataOutputStream(con.getOutputStream());
+            if (body != null && !body.isEmpty()) {
+                OutputStream out = con.getOutputStream();
+                OutputStreamWriter outWriter = new OutputStreamWriter(out, "UTF-8");
+                outWriter.write(body);
+                outWriter.flush();
+                outWriter.close();
+                out.close();
+            }
 
-            out.writeBytes(getParamsString(parameters));
-            out.flush();
-            out.close();
+            con.connect();
 
             int responseCode = con.getResponseCode();
 
@@ -75,11 +86,11 @@ public class ReeQuest {
             if (responseCode == 200) {
                 return response.toString();
             } else {
-               ExceptionDTO Err = new ExceptionDTO( responseCode, "fejl");
-               return GSON.toJson(Err);
+                ExceptionDTO Err = new ExceptionDTO(responseCode, "fejl: " + response.toString());
+                return GSON.toJson(Err);
             }
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new ReeQuestException(e.getMessage());
         }
 
@@ -117,7 +128,5 @@ public class ReeQuest {
     public void setPaths(HashMap<String, String> paths) {
         this.paths = paths;
     }
-       
+
 }
-
-

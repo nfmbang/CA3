@@ -2,7 +2,7 @@
   "name": "onsdag",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://localhost:8080/ca3/",
+  "homepage": "http://localhost:8080/CA3/",
   "dependencies": {
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

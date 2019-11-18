@@ -1,4 +1,4 @@
-# Velcommen til CA3 af en gruppe?
+# Velcommen til CA3 af GRUPPE 6!
 ## Mål med opgaven:
 Lave en template der kan bruges til hurtigt at starte et project op, dvs. at det inkludere en react frontend (med router), en backend med REST-api, opsat swagger til at documentere API'en, sikkerhed gennem toke, Login og Logud funktion.   
 
